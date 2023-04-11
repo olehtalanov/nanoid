@@ -1,4 +1,5 @@
 # Nano ID package
+Generates unique hash ID like `Y-0_e8Fh`
 
 #### Installation
 ```
