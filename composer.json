@@ -1,0 +1,28 @@
+{
+    "name": "talanov/nanoid",
+    "description": "Add Nano ID for Laravel models",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Talanov\\Nanoid\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Oleh",
+            "email": "talanov.o@gmail.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [
+                "NanoIdServiceProvider"
+            ]
+        }
+    },
+    "minimum-stability": "dev",
+    "require": {
+        "php": "^8.1"
+    }
+}
