@@ -1,5 +1,5 @@
 # Nano ID package
-Generates unique hash ID like `Y-0_e8Fh`
+Generates unique URL safe hash ID like `Y-0_e8Fh`
 
 #### Installation
 ```
