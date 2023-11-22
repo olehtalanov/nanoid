@@ -4,10 +4,26 @@ namespace Talanov\Nanoid;
 
 use Talanov\Nanoid\NanoIdOptions;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Collection;
 
 trait HasNanoId
 {
     abstract public function getNanoIdOptions(): NanoIdOptions;
+
+    public function findByNano(string $nanoID): Builder
+    {
+        $options = $this->getNanoIdOptions();
+
+        return self::where($options->field ?? 'nano_id', $nanoID);
+    }
+
+    public function findManyByNano(array|Collection $nanoID): Builder
+    {
+        $options = $this->getNanoIdOptions();
+
+        return self::whereIn($options->field ?? 'nano_id', $nanoID);
+    }
 
     protected static function bootHasNanoId(): void
     {

@@ -37,3 +37,10 @@ Schema::create('users', static function (Blueprint $table) {
     ...
 });
 ```
+
+```
+User::findByNano(['4kO3l_sl', 'oPn_12Hg'])->get();
+User::findByNano(['4kO3l_sl', 'oPn_12Hg'])->paginate();
+
+User::findByNano('4kO3l_sl')->firstOrFail();
+```
