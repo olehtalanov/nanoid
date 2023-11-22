@@ -18,9 +18,9 @@ trait HasNanoId
         return self::where($options->field ?? 'nano_id', $nanoID);
     }
 
-    public function findManyByNano(array|Collection $nanoID): Builder
+    public static function findManyByNano(array|Collection $nanoID): Builder
     {
-        $options = $this->getNanoIdOptions();
+        $options = self::getNanoIdOptions();
 
         return self::whereIn($options->field ?? 'nano_id', $nanoID);
     }
