@@ -11,18 +11,20 @@ trait HasNanoId
 {
     abstract public function getNanoIdOptions(): NanoIdOptions;
 
-    public function findByNano(string $nanoID): Builder
+    public static function findByNano(string $nanoID): Builder
     {
-        $options = $this->getNanoIdOptions();
+        $instance = new static();
+        $options = $instance->getNanoIdOptions();
 
-        return self::where($options->field ?? 'nano_id', $nanoID);
+        return $instance->where($options->field ?? 'nano_id', $nanoID);
     }
 
     public static function findManyByNano(array|Collection $nanoID): Builder
     {
-        $options = self::getNanoIdOptions();
+        $instance = new static();
+        $options = $instance->getNanoIdOptions();
 
-        return self::whereIn($options->field ?? 'nano_id', $nanoID);
+        return $instance->whereIn($options->field ?? 'nano_id', $nanoID);
     }
 
     protected static function bootHasNanoId(): void
