@@ -2,6 +2,7 @@
 
 namespace Talanov\Nanoid;
 
+use Illuminate\Contracts\Support\Arrayable;
 use Talanov\Nanoid\NanoIdOptions;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
@@ -9,22 +10,32 @@ use Illuminate\Support\Collection;
 
 trait HasNanoId
 {
+    public const DEFAULT_COLUMN_NAME = 'nano_id';
+
     abstract public function getNanoIdOptions(): NanoIdOptions;
 
-    public static function findByNano(string $nanoID): Builder
+    public static function findByNano(mixed $id = null): Builder
     {
+        if (is_array($id) || $id instanceof Arrayable) {
+            return self::findManyByNano($id);
+        }
+
         $instance = new static();
         $options = $instance->getNanoIdOptions();
 
-        return $instance->where($options->field ?? 'nano_id', $nanoID);
+        if ($id !== null) {
+            $id = (string) $id;
+        }
+
+        return $instance->where($options->field ?? self::DEFAULT_COLUMN_NAME, '=', $id);
     }
 
-    public static function findManyByNano(array|Collection $nanoID): Builder
+    public static function findManyByNano(array|Collection $id): Builder
     {
         $instance = new static();
         $options = $instance->getNanoIdOptions();
 
-        return $instance->whereIn($options->field ?? 'nano_id', $nanoID);
+        return $instance->whereIn($options->field ?? self::DEFAULT_COLUMN_NAME, $id);
     }
 
     protected static function bootHasNanoId(): void
@@ -37,7 +48,7 @@ trait HasNanoId
     protected function generateNanoId(): void
     {
         $options = $this->getNanoIdOptions();
-        $field = $options->field ?? 'nano_id';
+        $field = $options->field ?? self::DEFAULT_COLUMN_NAME;
         $value = $this->generateUniqueNanoIdValue();
 
         if (! $this->recordWithSameUidExists($field, $value)) {
