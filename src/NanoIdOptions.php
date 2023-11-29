@@ -4,9 +4,9 @@ namespace Talanov\Nanoid;
 
 final class NanoIdOptions
 {
-    protected readonly string $field;
+    public string $field;
 
-    protected readonly int $length;
+    public int $length;
 
     public static function make(): NanoIdOptions
     {
