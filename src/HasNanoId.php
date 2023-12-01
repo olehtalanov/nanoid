@@ -63,7 +63,7 @@ trait HasNanoId
         $options = $this->getNanoIdOptions();
 
         $hashBase64 = base64_encode(hash('sha256', microtime(), true));
-        $hashUrlsafe = strtr($hashBase64, '+/', '-_');
+        $hashUrlsafe = strtr($hashBase64, '+/', '_~');
         $hashUrlsafe = rtrim($hashUrlsafe, '=');
 
         return substr($hashUrlsafe, 0, $options->length ?? 8);
